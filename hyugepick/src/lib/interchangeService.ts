@@ -39,7 +39,7 @@ interface ICApiResponse {
     xValue: string;             // 경도 (X좌표)
     yValue: string;             // 위도 (Y좌표)
     startValue?: string;        // 시점으로부터 거리(km)
-    [key: string]: any;         // 기타 필드
+    [key: string]: string;         // 기타 필드
   }>;
 }
 
@@ -59,7 +59,7 @@ export class InterchangeService {
     }
     
     try {
-      let allICs: any[] = [];
+      const allICs: any[] = [];
       let pageNo = 1;
       const numOfRows = 100;
       let hasMoreData = true;

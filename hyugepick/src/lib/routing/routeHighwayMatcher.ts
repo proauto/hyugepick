@@ -426,7 +426,7 @@ export class RouteHighwayMatcher {
       return this.calculateDistance(point, lineStart);
     }
 
-    let param = dot / lenSq;
+    const param = dot / lenSq;
 
     let xx, yy;
 

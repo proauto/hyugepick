@@ -971,7 +971,7 @@ export class HighwayAPI {
       return this.calculateDistance(point, lineStart);
     }
     
-    let param = dot / lenSq;
+    const param = dot / lenSq;
     
     let closestPoint: Coordinates;
     if (param < 0) {
@@ -1316,11 +1316,7 @@ export class HighwayAPI {
 
     const dot = A * C + B * D;
     const lenSq = C * C + D * D;
-    let param = -1;
-    
-    if (lenSq !== 0) {
-      param = dot / lenSq;
-    }
+    const param = lenSq !== 0 ? dot / lenSq : -1;
 
     let xx, yy;
 
