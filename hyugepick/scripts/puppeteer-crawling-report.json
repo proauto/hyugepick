@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-08-09T14:41:19.071Z",
+  "totalTargets": 5,
+  "successful": 5,
+  "failed": 0,
+  "results": [
+    {
+      "id": "250b26d6-fc76-4a16-bdd1-7457ee6de5f4",
+      "name": "청도새마을휴게소",
+      "success": true,
+      "newLat": 35.5956306,
+      "newLng": 128.7671204,
+      "url": "https://www.google.com/maps/place/%EC%B2%AD%EB%8F%84%EC%83%88%EB%A7%88%EC%9D%84%ED%9C%B4%EA%B2%8C%EC%86%8C+%EB%B6%80%EC%82%B0%EB%B0%A9%ED%96%A5/data=!4m10!1m2!2m1!1z7LKt64-E7IOI66eI7J2E7Zy06rKM7IaMIO2ctOqyjOyGjA!3m6!1s0x356602770caf8249:0xbc755175afbe16f!8m2!3d35.5956306!4d128.7671204!15sCiLssq3rj4Tsg4jrp4jsnYTtnLTqsozshowg7Zy06rKM7IaMkgETdG9sbF9yb2FkX3Jlc3Rfc3RvcKoBewoJL20vMDIxOGJ5EAEqISId7IOI66eI7J2EIO2ctOqyjOyGjCDtnLTqsozshowoCTIfEAEiG3Nk-UL0Pfe2tG5-SqWwIptzSMUfSMHBZzFymzIoEAIiJOyyreuPhCDsg4jrp4jsnYQg7Zy06rKM7IaMIO2ctOqyjOyGjOABAA!16s%2Fg%2F11d_ty4hqd?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      "id": "4d654be4-41ef-4437-ab4a-74ec2dd588a4",
+      "name": "청도새마을휴게소",
+      "success": true,
+      "newLat": 35.5956306,
+      "newLng": 128.7671204,
+      "url": "https://www.google.com/maps/place/%EC%B2%AD%EB%8F%84%EC%83%88%EB%A7%88%EC%9D%84%ED%9C%B4%EA%B2%8C%EC%86%8C+%EB%B6%80%EC%82%B0%EB%B0%A9%ED%96%A5/data=!4m10!1m2!2m1!1z7LKt64-E7IOI66eI7J2E7Zy06rKM7IaMIO2ctOqyjOyGjA!3m6!1s0x356602770caf8249:0xbc755175afbe16f!8m2!3d35.5956306!4d128.7671204!15sCiLssq3rj4Tsg4jrp4jsnYTtnLTqsozshowg7Zy06rKM7IaMkgETdG9sbF9yb2FkX3Jlc3Rfc3RvcKoBewoJL20vMDIxOGJ5EAEqISId7IOI66eI7J2EIO2ctOqyjOyGjCDtnLTqsozshowoCTIfEAEiG3Nk-UL0Pfe2tG5-SqWwIptzSMUfSMHBZzFymzIoEAIiJOyyreuPhCDsg4jrp4jsnYQg7Zy06rKM7IaMIO2ctOqyjOyGjOABAA!16s%2Fg%2F11d_ty4hqd?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      "id": "e8699ec2-791d-4c91-9c49-a64c93db2dba",
+      "name": "고창고인돌(서울)",
+      "success": true,
+      "newLat": 35.4618757,
+      "newLng": 126.6734059,
+      "url": "https://www.google.com/maps/place/%EA%B3%A0%EC%B0%BD%EA%B3%A0%EC%9D%B8%EB%8F%8C%ED%9C%B4%EA%B2%8C%EC%86%8C+%EC%84%9C%EC%9A%B8%EB%B0%A9%ED%96%A5/data=!3m1!4b1!4m6!3m5!1s0x3571a1dd94e1ce6d:0xb0852a1b870a1d13!8m2!3d35.4618757!4d126.6734059!16s%2Fg%2F11gf2dcbg4?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      "id": "aa6a319e-aca7-4634-991f-edaf3c45ab8c",
+      "name": "군산(목포)",
+      "success": true,
+      "newLat": 35.980586,
+      "newLng": 126.828971,
+      "url": "https://www.google.com/maps/place/%EA%B5%B0%EC%82%B0%ED%9C%B4%EA%B2%8C%EC%86%8C+%EB%AA%A9%ED%8F%AC%EB%B0%A9%ED%96%A5/data=!3m1!4b1!4m6!3m5!1s0x357042fad0978a49:0xc8dd587251bfc015!8m2!3d35.980586!4d126.828971!16s%2Fg%2F1w0j22lh?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      "id": "021286bb-04b2-4bfe-8848-3cf61d809f22",
+      "name": "군산(서울)",
+      "success": true,
+      "newLat": 36.0188604,
+      "newLng": 126.7976422,
+      "url": "https://www.google.com/maps/place/%EA%B5%B0%EC%82%B0%ED%9C%B4%EA%B2%8C%EC%86%8C+%EC%84%9C%EC%9A%B8%EB%B0%A9%ED%96%A5/data=!3m1!4b1!4m6!3m5!1s0x3570681dc38eab91:0xfa5a39db649fa433!8m2!3d36.0188604!4d126.7976422!16s%2Fg%2F11f38b702d?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D"
+    }
+  ]
+}

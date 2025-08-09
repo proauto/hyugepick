@@ -1,0 +1,52 @@
+{
+  "name": "hyugepick",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint",
+    "sync:rest-areas": "tsx scripts/sync-rest-areas.ts",
+    "sync:full": "SYNC_TYPE=full tsx scripts/sync-rest-areas.ts",
+    "sync:incremental": "SYNC_TYPE=incremental tsx scripts/sync-rest-areas.ts",
+    "sync:additional": "tsx scripts/sync-additional-rest-areas.ts",
+    "sync:ic": "tsx scripts/sync-ic-data.ts",
+    "verify:ic": "tsx scripts/verify-ic-data.ts",
+    "sync:all": "npm run sync:full && npm run sync:additional && npm run sync:ic",
+    "sync:weekly": "tsx scripts/weekly-rest-area-sync.ts",
+    "monitor:operators": "tsx -e \"import { privateHighwayCollector } from './src/lib/scraping/privateHighwayOperators'; privateHighwayCollector.collectFromAllOperators().then(console.log);\"",
+    "verify:rest-areas": "tsx -e \"import { verificationSystem } from './src/lib/verification/restAreaVerification'; console.log('휴게소 검증 시스템 준비 완료');\"",
+    "test:direction-filter": "tsx scripts/test-direction-filter.ts",
+    "test:ic-filter": "tsx scripts/test-ic-based-filter.ts",
+    "analyze:rest-areas": "tsx scripts/analyze-rest-areas.ts",
+    "test:yeoju-filter": "tsx scripts/test-yeoju-filter.ts",
+    "test:api-direction": "tsx scripts/test-api-direction-filter.ts",
+    "test:simple-direction": "tsx scripts/simple-direction-test.ts"
+  },
+  "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.53.0",
+    "@types/selenium-webdriver": "^4.1.28",
+    "chromedriver": "^139.0.0",
+    "dotenv": "^16.4.5",
+    "next": "14.2.31",
+    "next-pwa": "^5.6.0",
+    "puppeteer": "^24.16.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "selenium-webdriver": "^4.34.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.31",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5"
+  }
+}

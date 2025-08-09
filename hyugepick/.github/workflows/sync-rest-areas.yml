@@ -1,0 +1,123 @@
+name: Weekly Rest Area Database Sync
+
+on:
+  # 스케줄 실행 (매주 월요일 새벽 3시 KST = 일요일 18시 UTC)
+  schedule:
+    - cron: '0 18 * * 0'
+  
+  # 수동 실행 가능
+  workflow_dispatch:
+    inputs:
+      sync_type:
+        description: 'Sync Type'
+        required: true
+        default: 'weekly'
+        type: choice
+        options:
+          - weekly
+          - official_only
+          - private_only
+          - manual_test
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Weekly Database Sync
+        if: github.event.inputs.sync_type == 'weekly' || github.event.inputs.sync_type == '' || github.event_name == 'schedule'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_HIGHWAY_API_KEY: ${{ secrets.HIGHWAY_API_KEY }}
+          NEXT_PUBLIC_KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+        run: |
+          npm run sync:weekly
+      
+      - name: Run Official API Only
+        if: github.event.inputs.sync_type == 'official_only'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_HIGHWAY_API_KEY: ${{ secrets.HIGHWAY_API_KEY }}
+          SYNC_TYPE: full
+        run: |
+          npm run sync:rest-areas
+      
+      - name: Run Private Highways Only
+        if: github.event.inputs.sync_type == 'private_only'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+        run: |
+          npm run sync:additional
+      
+      - name: Run Manual Test
+        if: github.event.inputs.sync_type == 'manual_test'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_HIGHWAY_API_KEY: ${{ secrets.HIGHWAY_API_KEY }}
+          NEXT_PUBLIC_KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+        run: |
+          echo "🧪 수동 테스트 모드"
+          npm run sync:all
+      
+      - name: Create weekly sync report
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const title = context.eventName === 'schedule' ? 
+              '📊 주간 휴게소 데이터베이스 동기화 리포트' : 
+              '🔄 휴게소 DB 동기화 결과';
+            
+            const status = '${{ job.status }}' === 'success' ? '✅ 성공' : '❌ 실패';
+            const syncType = '${{ github.event.inputs.sync_type }}' || 'weekly';
+            
+            const body = `## ${status} - 주간 DB 동기화
+            
+            ### 📋 실행 정보
+            - **실행 시간**: ${new Date().toLocaleString('ko-KR')}
+            - **동기화 타입**: ${syncType}
+            - **트리거**: ${context.eventName === 'schedule' ? '자동 스케줄' : '수동 실행'}
+            
+            ### 📊 동기화 범위
+            - ✅ **한국도로공사 API**: 공식 휴게소 ~203개
+            - ✅ **민자고속도로**: 추가 휴게소 ~8개
+            - ✅ **데이터 검증**: 중복 제거 및 품질 관리
+            
+            ### 🔗 상세 정보
+            - [실행 로그 확인](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+            - [휴게소 관리 페이지](http://localhost:3000/admin/db-sync)
+            
+            ### 💡 이용 안내
+            - 프론트엔드에서는 데이터베이스의 최신 데이터를 자동 사용
+            - 다음 동기화: 7일 후 자동 실행
+            - 경로 검색 시 모든 민자고속도로 휴게소 포함됨
+            
+            ${context.job.status === 'failure' ? '⚠️ 동기화 실패. 로그를 확인해주세요.' : '✅ 모든 휴게소 데이터가 최신 상태로 업데이트되었습니다.'}`;
+            
+            // 실패시에만 이슈 생성
+            if ('${{ job.status }}' === 'failure') {
+              github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `❌ ${title}`,
+                body: body,
+                labels: ['database', 'sync-error', 'automated']
+              });
+            }

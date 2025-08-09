@@ -1,0 +1,414 @@
+{
+  "totalCount": 45,
+  "validCoords": 45,
+  "invalidCoords": 0,
+  "accuracy": "100.0",
+  "targets": [
+    {
+      "id": "250b26d6-fc76-4a16-bdd1-7457ee6de5f4",
+      "name": "청도새마을휴게소",
+      "route": "대구부산고속도로",
+      "direction": "대구방향",
+      "currentLat": 35.595631,
+      "currentLng": 128.76712,
+      "searchQuery": "청도새마을휴게소 대구방향 휴게소"
+    },
+    {
+      "id": "4d654be4-41ef-4437-ab4a-74ec2dd588a4",
+      "name": "청도새마을휴게소",
+      "route": "대구부산고속도로",
+      "direction": "부산방향",
+      "currentLat": 35.595631,
+      "currentLng": 128.76712,
+      "searchQuery": "청도새마을휴게소 부산방향 휴게소"
+    },
+    {
+      "id": "cd636db4-0785-44b4-b74f-398effee1d88",
+      "name": "목감(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 37.390103,
+      "currentLng": 126.869855,
+      "searchQuery": "목감(서울) 휴게소"
+    },
+    {
+      "id": "ed4d7eaf-a2c6-48c7-9c75-72b9a9a593ad",
+      "name": "서천(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.131509,
+      "currentLng": 126.627445,
+      "searchQuery": "서천(서울) 휴게소"
+    },
+    {
+      "id": "7a2ab41a-97e5-406d-8918-8d4efb06f5bc",
+      "name": "홍성(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.552828,
+      "currentLng": 126.579955,
+      "searchQuery": "홍성(목포) 휴게소"
+    },
+    {
+      "id": "06245135-da9f-4bfb-a5f4-5b2cefc2e224",
+      "name": "홍성(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.553084,
+      "currentLng": 126.581503,
+      "searchQuery": "홍성(서울) 휴게소"
+    },
+    {
+      "id": "1c59681e-76df-472d-b61d-ecc75c1bbfe6",
+      "name": "함평천지(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.130737,
+      "currentLng": 126.481798,
+      "searchQuery": "함평천지(서울) 휴게소"
+    },
+    {
+      "id": "430fda3e-7edb-4789-a203-cf98d9e1f979",
+      "name": "행담도",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.944596,
+      "currentLng": 126.807768,
+      "searchQuery": "행담도 휴게소"
+    },
+    {
+      "id": "2a842b23-d12f-4f56-a6f7-93be8f5be16b",
+      "name": "대천(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.374231,
+      "currentLng": 126.557651,
+      "searchQuery": "대천(서울) 휴게소"
+    },
+    {
+      "id": "e8699ec2-791d-4c91-9c49-a64c93db2dba",
+      "name": "고창고인돌(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.461876,
+      "currentLng": 126.673406,
+      "searchQuery": "고창고인돌(서울) 휴게소"
+    },
+    {
+      "id": "48bc156f-aad9-40a2-9a60-ee4d71c89e37",
+      "name": "대천(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.373286,
+      "currentLng": 126.556196,
+      "searchQuery": "대천(목포) 휴게소"
+    },
+    {
+      "id": "e99e52e0-1761-490c-bfd6-251fc3cf7e42",
+      "name": "부안하쉼터",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.67198,
+      "currentLng": 126.732507,
+      "searchQuery": "부안하쉼터 휴게소"
+    },
+    {
+      "id": "c4a23c0d-3609-483e-b697-4f9a1e799231",
+      "name": "부안상쉼터",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.672227,
+      "currentLng": 126.734521,
+      "searchQuery": "부안상쉼터 휴게소"
+    },
+    {
+      "id": "4ff6a90d-8e49-4406-8dc0-a1f692ae16c8",
+      "name": "대산상쉼터",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.34305,
+      "currentLng": 126.57778,
+      "searchQuery": "대산상쉼터 휴게소"
+    },
+    {
+      "id": "5fd3c2bf-3b76-4033-8cb2-ccabdb803bdc",
+      "name": "함평천지(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.069441,
+      "currentLng": 126.478715,
+      "searchQuery": "함평천지(목포) 휴게소"
+    },
+    {
+      "id": "a642fd2c-e166-4bc4-86e2-f03a0210d884",
+      "name": "고창고인돌(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.468235,
+      "currentLng": 126.674104,
+      "searchQuery": "고창고인돌(목포) 휴게소"
+    },
+    {
+      "id": "328da7d7-8083-4602-8d03-35840fc9f799",
+      "name": "서산(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.742902,
+      "currentLng": 126.565625,
+      "searchQuery": "서산(목포) 휴게소"
+    },
+    {
+      "id": "bb8a90ae-efbf-4ff2-a720-334d999b9258",
+      "name": "서산(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.733942,
+      "currentLng": 126.565867,
+      "searchQuery": "서산(서울) 휴게소"
+    },
+    {
+      "id": "9cdf7bb9-2580-4a19-b39d-cd2a2f640835",
+      "name": "영광(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.242843,
+      "currentLng": 126.509641,
+      "searchQuery": "영광(목포) 휴게소"
+    },
+    {
+      "id": "aa6a319e-aca7-4634-991f-edaf3c45ab8c",
+      "name": "군산(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 35.980586,
+      "currentLng": 126.828971,
+      "searchQuery": "군산(목포) 휴게소"
+    },
+    {
+      "id": "021286bb-04b2-4bfe-8848-3cf61d809f22",
+      "name": "군산(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.01886,
+      "currentLng": 126.797642,
+      "searchQuery": "군산(서울) 휴게소"
+    },
+    {
+      "id": "6be552ca-7fc9-46e4-9b94-be6f51919147",
+      "name": "서천(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 36.129844,
+      "currentLng": 126.626738,
+      "searchQuery": "서천(목포) 휴게소"
+    },
+    {
+      "id": "f52937b8-6b4b-4f9b-8f4e-772cbda09d4e",
+      "name": "화성(서울)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 37.143508,
+      "currentLng": 126.8809,
+      "searchQuery": "화성(서울) 휴게소"
+    },
+    {
+      "id": "4340a4be-ce43-4a20-aaa6-57c34c9da7ec",
+      "name": "화성(목포)",
+      "route": "서해안선",
+      "direction": "",
+      "currentLat": 37.144844,
+      "currentLng": 126.879362,
+      "searchQuery": "화성(목포) 휴게소"
+    },
+    {
+      "id": "2e3e9158-0298-418e-8fbb-cd117e9686a1",
+      "name": "서하남행복드림쉼터",
+      "route": "수도권제1순환선",
+      "direction": "",
+      "currentLat": 37.525849,
+      "currentLng": 127.193073,
+      "searchQuery": "서하남행복드림쉼터 휴게소"
+    },
+    {
+      "id": "c708c5c7-e4e7-414b-8098-a756879b8198",
+      "name": "의왕(일산)",
+      "route": "수도권제1순환선",
+      "direction": "",
+      "currentLat": 37.393384,
+      "currentLng": 127.022718,
+      "searchQuery": "의왕(일산) 휴게소"
+    },
+    {
+      "id": "829a4d18-3a9d-4a70-9995-148befddc24b",
+      "name": "구리(일산)",
+      "route": "수도권제1순환선",
+      "direction": "",
+      "currentLat": 37.627981,
+      "currentLng": 127.139087,
+      "searchQuery": "구리(일산) 휴게소"
+    },
+    {
+      "id": "3849d524-8d4d-4915-af28-1817b4831d88",
+      "name": "문경(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.620863,
+      "currentLng": 128.150279,
+      "searchQuery": "문경(창원) 휴게소"
+    },
+    {
+      "id": "d7d25205-f0de-42e8-9fa2-ea8d81a1d24c",
+      "name": "영산(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 35.429578,
+      "currentLng": 128.496112,
+      "searchQuery": "영산(창원) 휴게소"
+    },
+    {
+      "id": "7286753c-1573-45d5-ae8f-a68ff838f6c0",
+      "name": "칠서(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 35.370958,
+      "currentLng": 128.496632,
+      "searchQuery": "칠서(양평) 휴게소"
+    },
+    {
+      "id": "4f255bf6-54b7-4f46-927f-2cccafe92073",
+      "name": "선산(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.277695,
+      "currentLng": 128.248999,
+      "searchQuery": "선산(양평) 휴게소"
+    },
+    {
+      "id": "ef951eac-1a30-4031-aaf8-f5f819ad927f",
+      "name": "선산(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.274604,
+      "currentLng": 128.250736,
+      "searchQuery": "선산(창원) 휴게소"
+    },
+    {
+      "id": "03a3339a-8112-49a8-a01d-22a38119b5aa",
+      "name": "충주(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 37.022917,
+      "currentLng": 127.838927,
+      "searchQuery": "충주(양평) 휴게소"
+    },
+    {
+      "id": "f5adb446-128a-4e6e-bd49-7edd69c7d96f",
+      "name": "충주(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 37.022352,
+      "currentLng": 127.837551,
+      "searchQuery": "충주(창원) 휴게소"
+    },
+    {
+      "id": "c326d529-5b1e-4601-94fa-8ec8b9dbddfe",
+      "name": "괴산(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.831792,
+      "currentLng": 127.959679,
+      "searchQuery": "괴산(양평) 휴게소"
+    },
+    {
+      "id": "944e1668-d3e0-464b-b759-6ebaa9e67f62",
+      "name": "괴산(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.831323,
+      "currentLng": 127.958253,
+      "searchQuery": "괴산(창원) 휴게소"
+    },
+    {
+      "id": "54833d4b-afea-4355-9096-bbe84e7957c3",
+      "name": "문경(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.620477,
+      "currentLng": 128.152145,
+      "searchQuery": "문경(양평) 휴게소"
+    },
+    {
+      "id": "e6ee4cbf-39ed-4f4d-8524-5919f3e8ac05",
+      "name": "남성주참외(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 35.868665,
+      "currentLng": 128.316853,
+      "searchQuery": "남성주참외(창원) 휴게소"
+    },
+    {
+      "id": "35b95aad-f4f3-4f05-87c1-acb4259908fa",
+      "name": "남성주참외(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 35.85787,
+      "currentLng": 128.319554,
+      "searchQuery": "남성주참외(양평) 휴게소"
+    },
+    {
+      "id": "3b514893-aa5c-4f0d-88a3-88c4ed8d1a57",
+      "name": "서여주(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 37.278893,
+      "currentLng": 127.580067,
+      "searchQuery": "서여주(양평) 휴게소"
+    },
+    {
+      "id": "c7b14d4b-417e-4f20-a7c1-7d5f8c4b0761",
+      "name": "서여주(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 37.278948,
+      "currentLng": 127.57867,
+      "searchQuery": "서여주(창원) 휴게소"
+    },
+    {
+      "id": "5765d7ee-8654-45f4-a84d-01907f1e0934",
+      "name": "성주(양평)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.010327,
+      "currentLng": 128.260271,
+      "searchQuery": "성주(양평) 휴게소"
+    },
+    {
+      "id": "fb770cec-3d9b-43e6-bcea-17fc7c9e019d",
+      "name": "성주(창원)",
+      "route": "중부내륙선",
+      "direction": "",
+      "currentLat": 36.00855,
+      "currentLng": 128.260946,
+      "searchQuery": "성주(창원) 휴게소"
+    },
+    {
+      "id": "bdaad93d-d806-449a-9316-109522af18d0",
+      "name": "현풍(대구)",
+      "route": "중부내륙지선",
+      "direction": "",
+      "currentLat": 35.702351,
+      "currentLng": 128.437688,
+      "searchQuery": "현풍(대구) 휴게소"
+    },
+    {
+      "id": "609aa3b8-43b2-437d-b188-dd2b946edf80",
+      "name": "현풍(창원)",
+      "route": "중부내륙지선",
+      "direction": "",
+      "currentLat": 35.702309,
+      "currentLng": 128.435982,
+      "searchQuery": "현풍(창원) 휴게소"
+    }
+  ],
+  "generatedAt": "2025-08-09T14:44:03.915Z"
+}
