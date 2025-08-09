@@ -58,8 +58,9 @@ async function analyzePrivateHighwayRestAreas() {
 
     console.log('\n📋 민자고속도로별 휴게소 분류:');
     Object.entries(groupedByRoute).forEach(([routeName, areas]) => {
-      console.log(`\n🛣️ ${routeName}: ${areas.length}개`);
-      areas.forEach((area, index) => {
+      const typedAreas = areas as any[];
+      console.log(`\n🛣️ ${routeName}: ${typedAreas.length}개`);
+      typedAreas.forEach((area, index) => {
         const coords = area.coordinates || {};
         const lat = coords.lat || area.lat || 0;
         const lng = coords.lng || area.lng || 0;
@@ -80,7 +81,7 @@ async function analyzePrivateHighwayRestAreas() {
     // 4. 좌표 정확도 분석
     let validCoords = 0;
     let invalidCoords = 0;
-    const problematicAreas = [];
+    const problematicAreas: any[] = [];
 
     privateRestAreas.forEach(area => {
       const coords = area.coordinates || {};

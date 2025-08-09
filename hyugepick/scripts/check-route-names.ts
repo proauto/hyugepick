@@ -39,7 +39,7 @@ async function main() {
     .select('route_name')
     .not('route_name', 'is', null);
 
-  const routeNames = [...new Set(uniqueRoutes?.map(r => r.route_name))].sort();
+  const routeNames = Array.from(new Set(uniqueRoutes?.map(r => r.route_name))).sort();
   
   console.log('\n📈 고유 노선명 목록:');
   routeNames.forEach((name, i) => {

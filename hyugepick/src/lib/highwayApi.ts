@@ -166,43 +166,6 @@ export class HighwayAPI {
     return sortedRestAreas;
   }
 
-  // 6. 카카오 경로 roads 정보 기반 휴게소 조회 (정확한 도로 매칭)
-  async getRestAreasOnHighwaySegments(
-    highwaySegments: any[],
-    routePath: Coordinates[]
-  ): Promise<RestArea[]> {
-    try {
-      console.log('🔥 도로 기반 휴게소 검색 시작');
-      console.log(`🔥 고속도로 구간: ${highwaySegments.length}개`);
-      highwaySegments.forEach(segment => {
-        console.log(`   - ${segment.name}: ${segment.distance}m`);
-      });
-      
-      // 1단계: 모든 휴게소 데이터 조회
-      const allRestAreas = await this.getRestAreas();
-      console.log(`🔥 전체 휴게소 수: ${allRestAreas.length}개`);
-      
-      // 2단계: 경로의 고속도로 구간과 매칭되는 휴게소만 필터링
-      const matchingRestAreas = this.filterRestAreasByHighwaySegments(allRestAreas, highwaySegments);
-      
-      // 3단계: 방향성 고려하여 올바른 방향 휴게소만 선택
-      const directionFilteredRestAreas = this.filterRestAreasByDirection(matchingRestAreas, routePath);
-      
-      // 4단계: 실제 운전 순서대로 정렬
-      const sortedRestAreas = this.sortRestAreasByDrivingOrder(directionFilteredRestAreas, routePath);
-      
-      console.log(`🔥 최종 선택된 휴게소 ${sortedRestAreas.length}개:`);
-      sortedRestAreas.forEach((restArea, index) => {
-        console.log(`   ${index + 1}. ${restArea.name} (${restArea.routeCode}) - ${restArea.direction}`);
-      });
-      
-      return sortedRestAreas;
-      
-    } catch (error) {
-      console.error('🔥 도로 기반 휴게소 검색 실패:', error);
-      return [];
-    }
-  }
   
   // 고속도로 구간 정보 기반 휴게소 필터링 (정확한 도로명 매칭)
   private filterRestAreasByHighwaySegments(

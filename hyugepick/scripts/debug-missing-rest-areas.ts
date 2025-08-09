@@ -92,7 +92,7 @@ async function debugMissingRestAreas() {
       for (const restArea of restAreas) {
         console.log(`\n🏪 휴게소: ${restArea.name}`);
         console.log(`  - 위치: ${restArea.coordinates.lat.toFixed(6)}, ${restArea.coordinates.lng.toFixed(6)}`);
-        console.log(`  - 도로명: ${restArea.routeName || '없음'}`);
+        console.log(`  - 도로명: ${'없음'}`);
         console.log(`  - 노선코드: ${restArea.routeCode || '없음'}`);
         console.log(`  - 방향: ${restArea.direction || '없음'}`);
         
@@ -109,16 +109,16 @@ async function debugMissingRestAreas() {
         console.log(`    - 가장 가까운 경로 포인트: ${distanceInfo.closestPoint.lat.toFixed(6)}, ${distanceInfo.closestPoint.lng.toFixed(6)}`);
         console.log(`    - 경로상 위치: ${distanceInfo.index}/${routeInfo.path.length} (${((distanceInfo.index/routeInfo.path.length)*100).toFixed(1)}%)`);
         
-        // 도로 분석
-        if (restArea.routeName) {
-          if (restArea.routeName.includes('영동')) {
-            console.log(`    🛣️ 영동고속도로 휴게소`);
-          } else if (restArea.routeName.includes('중앙')) {
-            console.log(`    🛣️ 중앙고속도로 휴게소`);
-          } else if (restArea.routeName.includes('경부')) {
-            console.log(`    🛣️ 경부고속도로 휴게소`);
-          }
-        }
+        // 도로 분석 (routeName 속성 사용 불가로 인해 주석 처리)
+        // if (restArea.routeName) {
+        //   if (restArea.routeName.includes('영동')) {
+        //     console.log(`    🛣️ 영동고속도로 휴게소`);
+        //   } else if (restArea.routeName.includes('중앙')) {
+        //     console.log(`    🛣️ 중앙고속도로 휴게소`);
+        //   } else if (restArea.routeName.includes('경부')) {
+        //     console.log(`    🛣️ 경부고속도로 휴게소`);
+        //   }
+        // }
       }
     }
     
@@ -175,9 +175,10 @@ async function debugMissingRestAreas() {
           if (distanceInfo.distance > 2000) {
             console.log(`    - 거리 필터에서 제외: ${(distanceInfo.distance/1000).toFixed(2)}km > 2km`);
           }
-          if (restArea.routeName && !restArea.routeName.includes('경부')) {
-            console.log(`    - 비경부선 휴게소: ${restArea.routeName}`);
-          }
+          // routeName 속성 사용 불가로 인해 주석 처리
+          // if (restArea.routeName && !restArea.routeName.includes('경부')) {
+          //   console.log(`    - 비경부선 휴게소: ${restArea.routeName}`);
+          // }
           if (restArea.direction) {
             console.log(`    - 방향 정보: ${restArea.direction}`);
           }
@@ -189,20 +190,19 @@ async function debugMissingRestAreas() {
     console.log('\n' + '=' .repeat(80));
     console.log('📍 5단계: 현재 필터링된 휴게소 목록 (도로별)\n');
     
-    const byRoute = {};
-    filteredRestAreas.forEach(ra => {
-      const routeName = ra.routeName || '미분류';
-      if (!byRoute[routeName]) byRoute[routeName] = [];
-      byRoute[routeName].push(ra.name);
-    });
+    // routeName 속성 사용 불가로 인해 주석 처리
+    // const byRoute = {};
+    // filteredRestAreas.forEach(ra => {
+    //   const routeName = ra.routeName || '미분류';
+    //   if (!byRoute[routeName]) byRoute[routeName] = [];
+    //   byRoute[routeName].push(ra.name);
+    // });
     
-    Object.entries(byRoute).forEach(([routeName, restAreas]) => {
-      console.log(`🛣️ ${routeName}: ${restAreas.length}개`);
-      restAreas.forEach((name, index) => {
-        console.log(`  ${index + 1}. ${name}`);
-      });
-      console.log('');
+    console.log(`🛣️ 전체: ${filteredRestAreas.length}개`);
+    filteredRestAreas.forEach((ra, index) => {
+      console.log(`  ${index + 1}. ${ra.name}`);
     });
+    console.log('');
     
   } catch (error) {
     console.error('❌ 오류 발생:', error);

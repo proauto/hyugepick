@@ -259,13 +259,13 @@ export default function RouteDisplay({
       ? `<p style="margin:2px 0;color:#28a745;font-weight:bold;">🚗 출발지로부터 ${restArea.routeDistance}km (${restArea.routeDuration || 0}분 소요)</p>`
       : '';
 
-    // 상세 정보가 있는 경우 매장 정보 표시
-    const storeInfo = restArea.detail?.foods && restArea.detail.foods.length > 0
-      ? `<p style="margin:4px 0 2px 0;"><strong>🍽️ 인기 매장:</strong><br/>${restArea.detail.foods.slice(0, 3).map(f => f.name).join(', ')}</p>`
+    // 매장 정보 표시 (기본 foods 속성 사용)
+    const storeInfo = restArea.foods && restArea.foods.length > 0
+      ? `<p style="margin:4px 0 2px 0;"><strong>🍽️ 인기 매장:</strong><br/>${restArea.foods.slice(0, 3).map(f => f.name).join(', ')}</p>`
       : '';
 
-    const facilityInfo = restArea.detail?.facilities && restArea.detail.facilities.length > 0
-      ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.detail.facilities.slice(0, 5).map(f => f.name).join(', ')}</p>`
+    const facilityInfo = restArea.facilities && restArea.facilities.length > 0
+      ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.facilities.slice(0, 5).join(', ')}</p>`
       : restArea.facilities.length > 0 
         ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.facilities.slice(0, 5).join(', ')}</p>`
         : '';
@@ -291,7 +291,7 @@ export default function RouteDisplay({
           >
             상세보기
           </button>
-          ${restArea.detail ? 
+          ${restArea.foods && restArea.foods.length > 0 ? 
             `<button 
               onclick="window.showRestAreaMenu('${restArea.id}')" 
               style="padding:6px 12px;background:#007bff;color:white;border:none;border-radius:4px;font-size:11px;cursor:pointer;flex:1;"
@@ -331,17 +331,17 @@ export default function RouteDisplay({
 
     (window as any).showRestAreaMenu = (restAreaId: string) => {
       const restArea = state.restAreas.find(ra => ra.id === restAreaId);
-      if (restArea?.detail?.foods) {
+      if (restArea?.foods) {
         console.log('🔥 휴게소 매장정보:', restArea.name);
         let menuMsg = `🍽️ ${restArea.name} 인기 매장\n\n`;
-        restArea.detail.foods.slice(0, 5).forEach((food, idx) => {
+        restArea.foods.slice(0, 5).forEach((food, idx) => {
           menuMsg += `${idx + 1}. ${food.name}\n`;
           if (food.category) menuMsg += `   분류: ${food.category}\n`;
           if (food.price) menuMsg += `   가격: ${food.price}\n`;
           menuMsg += '\n';
         });
-        if (restArea.detail.foods.length > 5) {
-          menuMsg += `... 외 ${restArea.detail.foods.length - 5}개 매장 더`;
+        if (restArea.foods.length > 5) {
+          menuMsg += `... 외 ${restArea.foods.length - 5}개 매장 더`;
         }
         alert(menuMsg);
       }

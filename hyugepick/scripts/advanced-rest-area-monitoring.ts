@@ -137,13 +137,11 @@ async function main() {
             name: restArea.name,
             coordinates: { lat: restArea.lat, lng: restArea.lng },
             routeCode: restArea.route_code,
-            routeName: restArea.route_name,
             direction: restArea.direction,
             address: restArea.address || '',
             phoneNumber: restArea.phone || '',
             facilities: restArea.facilities || [],
-            operatingHours: restArea.operating_hours || '24시간',
-            serviceType: restArea.service_type || '휴게소'
+            operatingHours: restArea.operating_hours || '24시간'
           });
           
           stats.restAreasVerified++;
@@ -223,13 +221,13 @@ async function main() {
             unit_code: restArea.id,
             name: restArea.name,
             route_code: restArea.routeCode,
-            route_name: restArea.routeName,
+            route_name: '',
             direction: restArea.direction,
             lat: restArea.coordinates.lat,
             lng: restArea.coordinates.lng,
             address: restArea.address,
             phone: restArea.phoneNumber,
-            service_type: restArea.serviceType,
+            service_type: '휴게소',
             operating_hours: restArea.operatingHours,
             facilities: restArea.facilities,
             source: 'advanced_monitoring',

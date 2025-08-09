@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
         throw new Error('Kakao API failed, fallback to direct route');
       }
     } catch (kakaoError) {
-      console.warn(`⚠️ 카카오 API 오류, 직선 경로로 폴백:`, kakaoError.message);
+      console.warn(`⚠️ 카카오 API 오류, 직선 경로로 폴백:`, kakaoError instanceof Error ? kakaoError.message : kakaoError);
       
       // 직선 경로 생성 (폴백)
       const routePath = [];

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     console.log(`🚨🚨🚨 전체 휴게소 데이터 수집 시작`);
     console.log(`🚨🚨🚨 API 키: ${apiKey ? '있음' : '없음'} (길이: ${apiKey ? apiKey.length : 0})`);
     
-    let allRestAreas: any[] = [];
+    const allRestAreas: any[] = [];
     let pageNo = 1;
     let totalPages = 1;
     const numOfRows = 100; // 페이지당 100개씩
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
           break;
         }
       } catch (fetchError) {
-        console.error(`🚨🚨🚨 페이지 ${pageNo} 요청 실패:`, fetchError.message);
+        console.error(`🚨🚨🚨 페이지 ${pageNo} 요청 실패:`, fetchError instanceof Error ? fetchError.message : fetchError);
         break;
       }
       
@@ -85,10 +85,6 @@ export async function GET(request: NextRequest) {
     } else {
       throw new Error('휴게소 데이터를 가져올 수 없습니다.');
     }
-    
-    // 모든 엔드포인트 실패
-    console.error('모든 API 엔드포인트 실패');
-    throw lastError || new Error('모든 API 엔드포인트 실패');
 
   } catch (error) {
     console.error('휴게소 기준정보 API 최종 오류:', error);
@@ -104,7 +100,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       { 
         error: 'API 호출 실패',
-        details: lastError?.message,
+        details: error instanceof Error ? error.message : 'Unknown error',
         message: 'API를 수정해야 합니다. 목 데이터 사용 금지!'
       },
       { status: 500 }

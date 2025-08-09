@@ -498,13 +498,13 @@ export default function RouteMap({
       ? `<p style="margin:2px 0;color:#6c757d;font-size:10px;">📋 ${(restArea as any).directionReason.slice(0, 2).join(', ')}</p>`
       : '';
 
-    // 상세 정보가 있는 경우 매장 정보 표시
-    const storeInfo = restArea.detail?.foods && restArea.detail.foods.length > 0
-      ? `<p style="margin:4px 0 2px 0;"><strong>🍽️ 인기 매장:</strong><br/>${restArea.detail.foods.slice(0, 3).map(f => f.name).join(', ')}</p>`
+    // 매장 정보 표시
+    const storeInfo = restArea.foods && restArea.foods.length > 0
+      ? `<p style="margin:4px 0 2px 0;"><strong>🍽️ 인기 매장:</strong><br/>${restArea.foods.slice(0, 3).map(f => f.name).join(', ')}</p>`
       : '';
 
-    const facilityInfo = restArea.detail?.facilities && restArea.detail.facilities.length > 0
-      ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.detail.facilities.slice(0, 5).map(f => f.name).join(', ')}</p>`
+    const facilityInfo = restArea.facilities && restArea.facilities.length > 0
+      ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.facilities.slice(0, 5).join(', ')}</p>`
       : restArea.facilities.length > 0 
         ? `<p style="margin:4px 0 2px 0;"><strong>🏢 편의시설:</strong><br/>${restArea.facilities.slice(0, 5).join(', ')}</p>`
         : '';

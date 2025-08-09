@@ -90,7 +90,7 @@ async function debugRouteDistance() {
       for (const restArea of restAreas) {
         console.log(`\n🏪 휴게소: ${restArea.name}`);
         console.log(`  - 위치: ${restArea.coordinates.lat}, ${restArea.coordinates.lng}`);
-        console.log(`  - 도로명: ${restArea.routeName || '없음'}`);
+        console.log(`  - 도로명: ${'없음'}`);
         console.log(`  - 노선코드: ${restArea.routeCode || '없음'}`);
         console.log(`  - 방향: ${restArea.direction || '없음'}`);
         
@@ -136,7 +136,7 @@ async function debugRouteDistance() {
         nearbyRestAreas.push({
           name: restArea.name,
           distance: distanceInfo.distance,
-          routeName: restArea.routeName,
+          routeName: '',
           direction: restArea.direction
         });
       }

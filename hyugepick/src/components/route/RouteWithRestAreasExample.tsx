@@ -174,11 +174,11 @@ export default function RouteWithRestAreasExample({ className = '' }: RouteWithR
                     </div>
 
                     {/* 매장/음식 정보 미리보기 */}
-                    {restArea.detail?.foods && restArea.detail.foods.length > 0 && (
+                    {restArea.foods && restArea.foods.length > 0 && (
                       <div className="mt-3 pt-3 border-t border-gray-100">
                         <span className="text-xs text-gray-500 mb-1 block">인기 음식 TOP 3:</span>
                         <div className="flex flex-wrap gap-1">
-                          {restArea.detail.foods.slice(0, 3).map((food, idx) => (
+                          {restArea.foods.slice(0, 3).map((food, idx) => (
                             <span
                               key={food.id}
                               className="px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded"
