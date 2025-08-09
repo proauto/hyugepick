@@ -1,0 +1,12 @@
+/* Title.css */
+div .title {
+    display: block;
+    padding: 1.5em 1em 0.5em 1em;
+    text-align: center;
+}
+
+div .title span {
+    font-size: 1.5em;
+    color: rgb(34, 139, 34, 0.7);
+    font-weight: 500;
+}

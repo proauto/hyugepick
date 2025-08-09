@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()  // 모든 프로젝트에서 Maven Central을 사용할 수 있게 설정
+    }
+}
+
+dependencies {
+    // Spring Boot Starter
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
+    // Spring Boot DevTools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Spring Boot Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+    // Database Drivers
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // hibernate-spatial
+    implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
+
+    // Lombok
+    implementation 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // RestTemplate
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+//    // 크롤러
+//    implementation 'org.seleniumhq.selenium:selenium-java:4.15.0'
+//    implementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
+//    implementation 'org.jsoup:jsoup:1.16.2'
+//    implementation 'org.apache.commons:commons-io:1.3.2'
+}
+
+tasks.named('bootJar') {
+    enabled = true
+}
+
+configurations {
+    configureEach {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+}
+
+processResources.dependsOn('copySecret')
+
+tasks.register('copySecret', Copy) {
+    from './Config/backend' // 서브 모듈 디렉토리 경로
+    include "*.yml"  // 설정 파일 복사
+    into 'src/main/resources'  // 붙여넣을 위치
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

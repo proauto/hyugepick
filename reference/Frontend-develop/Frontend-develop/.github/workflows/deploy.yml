@@ -1,0 +1,34 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - develop  # 배포할 브랜치
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.14.0'  # 사용하는 Node.js 버전
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to EC2
+      env:
+        HOST: ${{ secrets.EC2_HOST }}  # EC2 IP 주소
+        USER: ${{ secrets.EC2_USER }}  # EC2 사용자 이름
+        PASSWORD: ${{ secrets.EC2_PASSWORD }}  # GitHub Secrets에 비밀번호 추가
+      run: |
+        echo "$PASSWORD" | sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -r ./dist/* $USER@$HOST:/var/www/frontend
+        echo "$PASSWORD" | sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USER@$HOST 'echo "$PASSWORD" | sudo -S systemctl restart nginx'
