@@ -356,16 +356,16 @@ export class DirectionBasedRestAreaFilter {
         // 세그먼트 방향과 고속도로 패턴 매칭
         const segmentDir = segment.direction;
         
-        if (directions.north && ['north', 'northeast', 'northwest'].includes(segmentDir)) {
+        if ('north' in directions && directions.north && ['north', 'northeast', 'northwest'].includes(segmentDir)) {
           return { match: true, reason: `${hwName} 북향 패턴` };
         }
-        if (directions.south && ['south', 'southeast', 'southwest'].includes(segmentDir)) {
+        if ('south' in directions && directions.south && ['south', 'southeast', 'southwest'].includes(segmentDir)) {
           return { match: true, reason: `${hwName} 남향 패턴` };
         }
-        if (directions.east && ['east', 'northeast', 'southeast'].includes(segmentDir)) {
+        if ('east' in directions && directions.east && ['east', 'northeast', 'southeast'].includes(segmentDir)) {
           return { match: true, reason: `${hwName} 동향 패턴` };
         }
-        if (directions.west && ['west', 'northwest', 'southwest'].includes(segmentDir)) {
+        if ('west' in directions && directions.west && ['west', 'northwest', 'southwest'].includes(segmentDir)) {
           return { match: true, reason: `${hwName} 서향 패턴` };
         }
       }

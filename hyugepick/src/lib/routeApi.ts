@@ -48,7 +48,7 @@ export class RouteAPI {
       return this.parseRouteResponse(data);
       
     } catch (error) {
-      console.warn(`⚠️ 카카오 API 오류, 직선 경로로 폴백:`, error.message);
+      console.warn(`⚠️ 카카오 API 오류, 직선 경로로 폴백:`, error instanceof Error ? error.message : error);
       return this.generateStraightLineRoute(origin, destination);
     }
   }

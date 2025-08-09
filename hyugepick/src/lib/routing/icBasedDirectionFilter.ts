@@ -78,7 +78,7 @@ export class ICBasedDirectionFilter {
       // 3. 각 노선별 방향 계산 (Reference: getDirectionByRoute)
       const directionMap = new Map<string, Direction>();
       
-      for (const routeName of routeNames) {
+      for (const routeName of Array.from(routeNames)) {
         const direction = await this.getDirectionByRoute(
           routeCoordinates,
           routeName

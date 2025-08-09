@@ -218,7 +218,7 @@ export default function RouteMap({
       let routePath: Coordinates[] = [];
       let routeDistance = 0;
       let routeDuration = 0;
-      let highwaySegments: any[] = []; // 이 함수 스코프로 이동
+      const highwaySegments: any[] = []; // 이 함수 스코프로 이동
 
       // 경로 정보가 있으면 폴리라인으로 표시
       if (routeData.routes && routeData.routes.length > 0) {

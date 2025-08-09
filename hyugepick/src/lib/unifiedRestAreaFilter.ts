@@ -115,7 +115,7 @@ export class UnifiedRestAreaFilter {
       });
       
       // 필터링된 휴게소들을 도로별로 분류하여 출력
-      const byRoute = {};
+      const byRoute: { [key: string]: string[] } = {};
       filteredRestAreas.forEach(ra => {
         const routeName = ra.routeName || ra.route_name || '미분류';
         if (!byRoute[routeName]) byRoute[routeName] = [];
@@ -135,12 +135,16 @@ export class UnifiedRestAreaFilter {
         
         return {
           ...area,
+          id: area.id || `rest_area_${index}`,
+          operatingHours: area.operating_hours || area.operatingHours || '24시간',
+          address: area.location || area.address || '',
+          facilities: area.facilities || [],
           distanceFromStart: distanceFromStart / 1000, // m → km 변환
           estimatedTime,
           confidence: 0.8, // 고속도로 기반 필터링의 높은 신뢰도
           directionReason: ['고속도로 매칭 기반'],
           routePosition: index / Math.max(filteredRestAreas.length - 1, 1)
-        };
+        } as FilteredRestArea;
       });
 
       return convertedResults;

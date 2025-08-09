@@ -144,7 +144,7 @@ export class HighwayAPI {
 
     // 각 휴게소의 경로상 거리와 소요시간 계산
     const restAreasWithDistance = nearbyRestAreas.map(restArea => {
-      const { distance, duration, routeIndex } = this.calculateRouteDistance(
+      const { distance, duration, routeIndex } = this.calculateRouteDistanceForRestArea(
         restArea.coordinates, 
         routePath
       );
@@ -299,15 +299,14 @@ export class HighwayAPI {
       
       return {
         ...restArea,
-        routeIndex: closestIndex,
-        distanceFromRoute: minDistance
+        routeIndex: closestIndex
       };
     });
     
     // 경로 인덱스 순서로 정렬
     const sortedRestAreas = restAreasWithOrder
       .sort((a, b) => a.routeIndex - b.routeIndex)
-      .map(({ routeIndex, distanceFromRoute, ...restArea }) => restArea);
+      .map(({ routeIndex, ...restArea }) => restArea);
     
     console.log(`🔥 정렬 완료: ${sortedRestAreas.map(ra => ra.name).join(' -> ')}`);
     
@@ -543,8 +542,8 @@ export class HighwayAPI {
     return isNear;
   }
 
-  // 경로상에서 휴게소까지의 정확한 거리와 소요시간 계산
-  private calculateRouteDistance(
+  // 경로상에서 휴게소까지의 정확한 거리와 소요시간 계산 (휴게소용)
+  private calculateRouteDistanceForRestArea(
     restAreaCoord: Coordinates, 
     routePath: Coordinates[]
   ): { distance: number; duration: number; routeIndex: number } {
@@ -1009,7 +1008,7 @@ export class HighwayAPI {
       
       // 상위 10개 휴게소 로그
       sortedRestAreas.slice(0, 10).forEach((ra, idx) => {
-        console.log(`  ${idx+1}. ${ra.name} (${ra.routeDistance.toFixed(1)}km 지점)`);
+        console.log(`  ${idx+1}. ${ra.name} (${ra.routeDistance?.toFixed(1) || '0.0'}km 지점)`);
       });
       
       return sortedRestAreas;
@@ -1135,7 +1134,6 @@ export class HighwayAPI {
         
         accessibleRestAreas.push({
           ...restArea,
-          distanceFromRoute: distanceToRoute,
           routeDistance: routeDistance
         });
         
@@ -1359,8 +1357,7 @@ export class HighwayAPI {
         // 방향성 체크: 하행이면 (부산)/(하행) 휴게소만, 상행이면 (서울)/(상행) 휴게소만
         if (this.checkRestAreaDirection(restArea, routeDirection)) {
           accessibleRestAreas.push({
-            ...restArea,
-            distanceFromRoute: distanceToRouteLine
+            ...restArea
           });
           addedRestAreaIds.add(restArea.id);
           console.log(`✅ 발견: ${restArea.name} (경로까지 ${distanceToRouteLine.toFixed(2)}km, ${restArea.routeCode})`);

@@ -236,18 +236,17 @@ export class RestAreaMatcher {
     }
 
     // 3단계: 고속도로 운영주체 확인 (새로 추가된 필드)
-    const extendedRestArea = restArea as any;
-    if (extendedRestArea.highway_operator) {
-      const operator = extendedRestArea.highway_operator.toLowerCase();
+    if (restArea.highway_operator) {
+      const operator = restArea.highway_operator.toLowerCase();
       if (operator.includes('한국도로공사') || operator.includes('민자')) {
         return true;
       }
     }
 
     // 4단계: 데이터 출처 확인 (새로 추가된 필드)
-    if (extendedRestArea.data_sources) {
-      const sources = Array.isArray(extendedRestArea.data_sources) 
-        ? extendedRestArea.data_sources 
+    if (restArea.data_sources) {
+      const sources = Array.isArray(restArea.data_sources) 
+        ? restArea.data_sources 
         : [];
       
       if (sources.includes('highway_api') || sources.includes('manual_data') || sources.includes('kakao_api')) {
@@ -306,7 +305,7 @@ export class RestAreaMatcher {
     }
 
     // 9단계: 신뢰도 기반 판별 (새로 추가된 필드)
-    if (extendedRestArea.confidence_score && extendedRestArea.confidence_score >= 0.7) {
+    if (restArea.confidence_score && restArea.confidence_score >= 0.7) {
       return true;
     }
 
@@ -372,8 +371,8 @@ export class RestAreaMatcher {
     return restAreas.map((restArea, index) => {
       if (index < restAreas.length - 1) {
         const nextRestArea = restAreas[index + 1];
-        const distanceToNext = nextRestArea.distanceFromStart - restArea.distanceFromStart;
-        const timeToNext = nextRestArea.estimatedTime - restArea.estimatedTime;
+        const distanceToNext = (nextRestArea.distanceFromStart || 0) - (restArea.distanceFromStart || 0);
+        const timeToNext = (nextRestArea.estimatedTime || 0) - (restArea.estimatedTime || 0);
 
         return {
           ...restArea,
@@ -432,4 +431,4 @@ export class RestAreaMatcher {
 export const restAreaMatcher = new RestAreaMatcher();
 
 // 매칭된 휴게소 타입 export
-export type { MatchedRestArea, MatchingOptions };
+export type { MatchedRestArea };

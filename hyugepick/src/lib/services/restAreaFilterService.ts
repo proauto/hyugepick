@@ -178,7 +178,7 @@ export class RestAreaFilterService {
     
     const filterResult = await highwayFirstRestAreaFilter.filterRestAreas(
       routeCoordinates,
-      allRestAreas,
+      allRestAreas as any,
       options
     );
     
@@ -329,7 +329,7 @@ export class RestAreaFilterService {
     
     const precisionResults = await routeCodePrecisionFilter.filterRestAreasByRouteCode(
       routeCoordinates,
-      allRestAreas,
+      allRestAreas as any,
       options
     );
     
@@ -363,7 +363,7 @@ export class RestAreaFilterService {
         },
         {
           name: '제외',
-          count: summary.excluded,
+          count: summary.filtered,
           description: '노선 코드 불일치'
         }
       ],

@@ -62,6 +62,18 @@ export interface RestArea {
   routeDistance?: number;  // 출발지로부터의 거리 (km)
   routeDuration?: number;  // 출발지로부터의 소요시간 (분)
   routeIndex?: number;     // 경로상 순서
+  // 추가 속성들 (데이터베이스 및 API에서 사용)
+  routeName?: string;      // 노선명 (예: "경부고속도로")
+  route_name?: string;     // 노선명 별칭
+  route_code?: string;     // 노선 코드 별칭
+  serviceType?: string;    // 서비스 타입 (예: "휴게소")
+  highway_operator?: string; // 운영주체
+  location?: string;       // 위치 정보
+  operating_hours?: string; // 운영시간 별칭
+  route_direction?: string; // 경로 방향
+  distanceFromStart?: number; // 시작점으로부터 거리
+  estimatedTime?: number;  // 예상 시간
+  [key: string]: any;      // 기타 동적 속성들
 }
 
 export interface RestFood {

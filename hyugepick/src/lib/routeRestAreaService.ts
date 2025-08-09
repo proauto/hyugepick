@@ -113,15 +113,15 @@ export class RouteRestAreaService {
       let matchedRestAreas;
       
       // 새로운 고속도로 우선 필터링 방식 (추천)
-      if (serviceOptions.matching.useHighwayFirstFilter) {
+      if ((serviceOptions.matching as any).useHighwayFirstFilter) {
         console.log('  🚀 고속도로 우선 필터링 적용 중...');
         
         const highwayFilterResult = await highwayFirstRestAreaFilter.filterRestAreas(
           routeAnalysis.coordinates,
-          allRestAreas,
+          allRestAreas as any,
           {
             ...HIGHWAY_FIRST_FILTER_OPTIONS,
-            maxDistanceFromRoute: serviceOptions.matching.maxDistance * 1000, // km → m
+            maxDistanceFromRoute: (serviceOptions.matching.maxDistance || 3) * 1000, // km → m
             minInterval: serviceOptions.matching.minInterval,
             maxResults: serviceOptions.matching.maxResults
           }
@@ -137,13 +137,13 @@ export class RouteRestAreaService {
           단계별결과: highwayFilterResult.summary.filterStages
         });
         
-      } else if (serviceOptions.matching.usePrecisionRouteFilter) {
+      } else if ((serviceOptions.matching as any).usePrecisionRouteFilter) {
         // 기존 노선 코드 정밀 필터링 (거리 및 노선 기반)
         console.log('  🎯 노선 코드 정밀 필터링 적용 중...');
         
         const precisionResults = await routeCodePrecisionFilter.filterRestAreasByRouteCode(
           routeAnalysis.coordinates,
-          allRestAreas,
+          allRestAreas as any,
           ROUTE_CODE_FILTER_OPTIONS
         );
         
@@ -156,12 +156,12 @@ export class RouteRestAreaService {
         console.log(`    - 노선 매칭률: ${((precisionSummary.routeCodeMatches / precisionSummary.total) * 100).toFixed(1)}%`);
         
         // 2차: IC 기반 방향 필터링 (정밀 필터링된 결과에 추가 적용)
-        if (serviceOptions.matching.enableDirectionFilter && serviceOptions.matching.useICBasedFilter) {
+        if ((serviceOptions.matching as any).enableDirectionFilter && (serviceOptions.matching as any).useICBasedFilter) {
           console.log('  🧭 IC 기반 방향 필터링 적용 중...');
           
           const accessibilityResults = await icBasedDirectionFilter.filterRestAreasByDirection(
             routeAnalysis.coordinates,
-            precisionFilteredAreas,
+            precisionFilteredAreas as any,
             IC_BASED_FILTER_OPTIONS
           );
           
@@ -180,13 +180,13 @@ export class RouteRestAreaService {
           matchedRestAreas = precisionFilteredAreas;
         }
         
-      } else if (serviceOptions.matching.enableDirectionFilter && serviceOptions.matching.useICBasedFilter) {
+      } else if ((serviceOptions.matching as any).enableDirectionFilter && (serviceOptions.matching as any).useICBasedFilter) {
         // 기존 IC 기반 필터링만 적용
         console.log('  🎯 IC 기반 방향 필터링 적용 중...');
         
         const accessibilityResults = await icBasedDirectionFilter.filterRestAreasByDirection(
           routeAnalysis.coordinates,
-          allRestAreas,
+          allRestAreas as any,
           IC_BASED_FILTER_OPTIONS
         );
         
@@ -209,7 +209,7 @@ export class RouteRestAreaService {
       // 5단계: 휴게소 상세정보 수집
       console.log('5단계: 휴게소 상세정보 수집 중...');
       const detailedData = await restAreaDataCollector.collectDetailedData(
-        matchedRestAreas,
+        matchedRestAreas as any,
         serviceOptions.collection
       );
 

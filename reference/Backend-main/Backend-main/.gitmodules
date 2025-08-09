@@ -1,9 +1,0 @@
-[submodule "Config"]
-	path = Config
-	url = https://github.com/RestSpotFinder/Config.git
-[submodule "log_module"]
-	path = log_module
-	url = https://github.com/Gupuroom/log_module.git
-[submodule "exception_module"]
-	path = exception_module
-	url = https://github.com/Gupuroom/exception_module.git

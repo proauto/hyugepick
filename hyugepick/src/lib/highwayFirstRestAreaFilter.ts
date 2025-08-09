@@ -5,6 +5,7 @@
 
 import { routeHighwayMatcher } from './routing/routeHighwayMatcher';
 import { icBasedDirectionFilter } from './routing/icBasedDirectionFilter';
+import { RestArea } from '@/types/map';
 
 interface RestAreaFilterOptions {
   maxDistanceFromRoute?: number;        // 경로로부터 최대 거리 (미터)
@@ -24,7 +25,7 @@ interface FilteredRestArea {
     lat: number;
     lng: number;
   };
-  routeName: string;
+  routeName?: string;  // optional로 변경
   routeCode?: string;
   direction?: string;
   route_direction?: string;
@@ -33,6 +34,9 @@ interface FilteredRestArea {
   lng?: number;
   route_name?: string;
   route_code?: string | null;
+  facilities?: string[];
+  operating_hours?: string;
+  location?: string;
   [key: string]: any;
 }
 
@@ -172,9 +176,21 @@ export class HighwayFirstRestAreaFilter {
     if (filterOptions.enableDirectionFilter && currentRestAreas.length > 0) {
       console.log('🧭 4단계: 방향성 기반 필터링...');
       
+      // FilteredRestArea를 RestArea로 변환
+      const restAreasForDirection: RestArea[] = currentRestAreas.map(ra => ({
+        id: ra.id || `${ra.routeCode}_${ra.name}`,
+        name: ra.name,
+        coordinates: ra.coordinates,
+        routeCode: ra.routeCode || '',
+        direction: ra.direction || '',
+        facilities: ra.facilities || [],
+        operatingHours: ra.operating_hours || '24시간',
+        address: ra.location || ''
+      }));
+      
       const directionResults = await icBasedDirectionFilter.filterRestAreasByDirection(
         routeCoordinates,
-        currentRestAreas,
+        restAreasForDirection,
         {
           maxDistanceFromRoute: filterOptions.maxDistanceFromRoute!,
           includeUnknown: true,
@@ -183,9 +199,24 @@ export class HighwayFirstRestAreaFilter {
         }
       );
 
+      // RestArea를 다시 FilteredRestArea로 변환
       currentRestAreas = directionResults
         .filter(result => result.isAccessible)
-        .map(result => result.restArea);
+        .map(result => {
+          const ra = result.restArea;
+          const filteredRa = currentRestAreas.find(cra => cra.name === ra.name);
+          return filteredRa || {
+            id: ra.id,
+            name: ra.name,
+            coordinates: ra.coordinates,
+            routeName: ra.routeCode || '',
+            routeCode: ra.routeCode,
+            direction: ra.direction,
+            facilities: ra.facilities,
+            operating_hours: ra.operatingHours,
+            location: ra.address
+          };
+        });
       
       filterStages.afterDirectionFilter = currentRestAreas.length;
       console.log(`  결과: ${filterStages.afterDistanceFilter}개 → ${currentRestAreas.length}개`);

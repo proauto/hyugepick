@@ -3,31 +3,14 @@
  * 메인 고속도로와 지선을 구분하여 정확한 휴게소 필터링 제공
  */
 
+import { RestArea } from '@/types/map';
+
 export interface RouteCodeFilterOptions {
   maxDistanceFromRoute: number;          // 경로로부터 최대 허용 거리 (미터)
   strictRouteMatching: boolean;          // 엄격한 노선 매칭 모드
   excludeBranchLines: boolean;           // 지선 제외 여부
   allowedRouteCodes?: string[];          // 허용된 노선 코드 목록
   routeAnalysisConfidence: number;       // 경로 분석 신뢰도 임계값
-}
-
-interface RestArea {
-  id?: string;
-  name: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  routeName: string;
-  routeCode?: string;
-  direction?: string;
-  route_direction?: string;
-  // 추가 호환성
-  lat?: number;
-  lng?: number;
-  route_name?: string;
-  route_code?: string | null;
-  [key: string]: any;
 }
 
 interface FilterResult {
@@ -68,11 +51,11 @@ export class RouteCodePrecisionFilter {
   }
 
   private getRouteName(restArea: RestArea): string | undefined {
-    return restArea.routeName || restArea.route_name;
+    return restArea.routeName || restArea.route_name || undefined;
   }
 
   private getRouteCode(restArea: RestArea): string | undefined {
-    return restArea.routeCode || restArea.route_code;
+    return restArea.routeCode || restArea.route_code || undefined;
   }
 
   // 메인 고속도로 노선 코드 매핑 (실제 데이터 기반)
