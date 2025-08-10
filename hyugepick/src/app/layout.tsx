@@ -33,17 +33,19 @@ export default function RootLayout({
         <Script
           src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=70584fcb3fd421abefaaa5391a8831f0&libraries=services,clusterer&autoload=false"
           strategy="beforeInteractive"
-        />
-        <Script id="kakao-map-init" strategy="afterInteractive">
-          {`
+          onLoad={() => {
+            console.log('🔥 카카오맵 스크립트 로드 완료');
             if (window.kakao && window.kakao.maps) {
-              console.log('🔥 카카오맵 수동 로드 시작');
-              window.kakao.maps.load(function() {
-                console.log('🔥 카카오맵 수동 로드 완료!');
+              window.kakao.maps.load(() => {
+                console.log('🔥 카카오맵 API 초기화 완료!');
+                window.kakaoMapsLoaded = true;
               });
             }
-          `}
-        </Script>
+          }}
+          onError={() => {
+            console.error('🔥 카카오맵 스크립트 로드 실패');
+          }}
+        />
         <AuthProvider>
           <main className="flex-1">
             {children}

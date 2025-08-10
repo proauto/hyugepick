@@ -137,7 +137,13 @@ export default function LocationInput({
       }
     } catch (error) {
       console.error('🔥 Places 검색 오류:', error);
-      setSearchError('검색 중 오류가 발생했습니다.');
+      console.log('🔥 현재 window.kakao 상태:', {
+        kakao: !!window.kakao,
+        maps: !!(window.kakao && window.kakao.maps),
+        services: !!(window.kakao && window.kakao.maps && window.kakao.maps.services),
+        userAgent: navigator.userAgent
+      });
+      setSearchError('카카오맵 API 로딩 중입니다. 잠시 후 다시 시도해주세요.');
       setIsSearching(false);
     }
   };
