@@ -60,6 +60,7 @@
       "Bash(npm run lint)",
       "Bash(npx eslint:*)",
       "Bash(sed:*)",
+      "Bash(git checkout:*)",
       "Bash(git merge:*)"
     ],
     "deny": []

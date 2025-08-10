@@ -36,12 +36,26 @@ export default function RootLayout({
         />
         <Script id="kakao-map-init" strategy="afterInteractive">
           {`
-            if (window.kakao && window.kakao.maps) {
-              console.log('🔥 카카오맵 수동 로드 시작');
-              window.kakao.maps.load(function() {
-                console.log('🔥 카카오맵 수동 로드 완료!');
-              });
-            }
+            (function() {
+              const initKakaoMaps = () => {
+                if (window.kakao && window.kakao.maps) {
+                  console.log('🔥 카카오맵 수동 로드 시작');
+                  window.kakao.maps.load(function() {
+                    console.log('🔥 카카오맵 수동 로드 완료!');
+                    window.kakaoMapsLoaded = true;
+                  });
+                } else {
+                  // 스크립트가 아직 로드되지 않았으면 재시도
+                  setTimeout(initKakaoMaps, 100);
+                }
+              };
+              
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initKakaoMaps);
+              } else {
+                initKakaoMaps();
+              }
+            })();
           `}
         </Script>
         <AuthProvider>
