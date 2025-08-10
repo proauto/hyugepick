@@ -54,8 +54,15 @@ export function extractCoordinates(data: any): Coordinates | null {
   }
 
   // coordinates 속성이 있는 경우 (RestArea 타입)
-  if (data?.coordinates && isValidCoordinate(data.coordinates)) {
-    return { lat: data.coordinates.lat, lng: data.coordinates.lng };
+  if (data?.coordinates) {
+    // coordinates가 객체이고 lat, lng가 있는 경우
+    if (isValidCoordinate(data.coordinates)) {
+      return { lat: data.coordinates.lat, lng: data.coordinates.lng };
+    }
+    // coordinates가 null이거나 비어있는 경우, 상위 레벨의 lat, lng 체크
+    if (typeof data.lat === 'number' && typeof data.lng === 'number' && isValidLatLng(data.lat, data.lng)) {
+      return { lat: data.lat, lng: data.lng };
+    }
   }
 
   // latitude/longitude 형태인 경우
