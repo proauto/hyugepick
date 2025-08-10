@@ -6,6 +6,7 @@
 import { Coordinates, RestArea } from '@/types/map';
 import { interchangeService, Interchange } from '../interchangeService';
 import { supabase } from '../supabase';
+import { getRestAreaCoordinates } from '../utils/coordinateValidator';
 
 // 방향 열거형 (Reference와 동일)
 export enum Direction {
@@ -117,10 +118,16 @@ export class ICBasedDirectionFilter {
     const nearbyRestAreas: RestArea[] = [];
     
     for (const restArea of restAreas) {
-      const distance = this.getMinDistanceFromRoute(
-        restArea.coordinates,
-        routeCoordinates
-      );
+      const coords = getRestAreaCoordinates(restArea);
+      if (!coords) {
+        console.warn('findNearbyRestAreas: 휴게소 좌표 추출 실패', {
+          restAreaId: restArea.id || (restArea as any).unit_code,
+          restAreaName: restArea.name
+        });
+        continue;
+      }
+
+      const distance = this.getMinDistanceFromRoute(coords, routeCoordinates);
       
       if (distance <= maxDistance) {
         nearbyRestAreas.push(restArea);
@@ -391,6 +398,23 @@ export class ICBasedDirectionFilter {
     point1: Coordinates,
     point2: Coordinates
   ): number {
+    // 입력 검증
+    if (!point1 || !point2) {
+      console.error('calculateDistance: 좌표가 null 또는 undefined입니다', { point1, point2 });
+      return Infinity;
+    }
+
+    if (typeof point1.lat !== 'number' || typeof point1.lng !== 'number' ||
+        typeof point2.lat !== 'number' || typeof point2.lng !== 'number') {
+      console.error('calculateDistance: 유효하지 않은 좌표입니다', { point1, point2 });
+      return Infinity;
+    }
+
+    if (isNaN(point1.lat) || isNaN(point1.lng) || isNaN(point2.lat) || isNaN(point2.lng)) {
+      console.error('calculateDistance: NaN 좌표입니다', { point1, point2 });
+      return Infinity;
+    }
+
     const R = 6371000; // 지구 반지름 (미터)
     const dLat = (point2.lat - point1.lat) * Math.PI / 180;
     const dLng = (point2.lng - point1.lng) * Math.PI / 180;
@@ -398,7 +422,17 @@ export class ICBasedDirectionFilter {
               Math.cos(point1.lat * Math.PI / 180) * Math.cos(point2.lat * Math.PI / 180) *
               Math.sin(dLng/2) * Math.sin(dLng/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
+    const distance = R * c;
+    
+    // 결과 검증
+    if (isNaN(distance) || !isFinite(distance)) {
+      console.error('calculateDistance: 계산 결과가 유효하지 않습니다', { 
+        point1, point2, distance, a, c 
+      });
+      return Infinity;
+    }
+    
+    return distance;
   }
   
   /**
