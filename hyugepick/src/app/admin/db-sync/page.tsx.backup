@@ -41,8 +41,8 @@ export default function DatabaseSyncPage() {
       } else {
         console.error('상태 조회 실패:', data.error);
       }
-    } catch (_) {
-      console.error('상태 조회 오류:', _);
+    } catch _ {
+      console.error('상태 조회 오류:',_;
     } finally {
       setLoading(false);
     }
@@ -73,7 +73,7 @@ export default function DatabaseSyncPage() {
       // 동기화 후 상태 갱신
       await fetchStatus();
       
-    } catch (_) {
+    } catch _ {
       setSyncResult({
         success: false,
         error: '주간 통합 동기화 실패'
@@ -107,7 +107,7 @@ export default function DatabaseSyncPage() {
       // 수집 후 상태 갱신
       await fetchStatus();
       
-    } catch (_) {
+    } catch _ {
       setSyncResult({
         success: false,
         error: '민자고속도로 휴게소 수집 실패'
@@ -138,7 +138,7 @@ export default function DatabaseSyncPage() {
       if (data.success) {
         await fetchStatus();
       }
-    } catch (_) {
+    } catch _ {
       setSyncResult({
         success: false,
         error: '동기화 요청 실패'

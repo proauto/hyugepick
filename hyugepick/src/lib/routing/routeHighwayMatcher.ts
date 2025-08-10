@@ -3,11 +3,7 @@
  * IC 데이터를 활용하여 경로가 실제로 지나가는 고속도로를 정확하게 식별
  */
 
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '@/lib/supabase';
 
 interface RouteCoordinate {
   lat: number;

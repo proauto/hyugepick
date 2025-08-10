@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { calculateDistanceFromCoords } from '@/lib/utils';
 
 export async function POST(request: NextRequest) {
   try {
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
         routePath.push({ lat, lng });
       }
       
-      const distance = calculateDistance(origin.lat, origin.lng, destination.lat, destination.lng);
+      const distance = calculateDistanceFromCoords(origin.lat, origin.lng, destination.lat, destination.lng);
       const duration = Math.round(distance * 60);
       
       const mockRouteData = {
@@ -103,15 +104,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// 두 점 간의 거리 계산 (km)
-function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371; // 지구 반지름 (km)
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-    Math.sin(dLng/2) * Math.sin(dLng/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c;
-}

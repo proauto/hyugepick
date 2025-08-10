@@ -305,7 +305,7 @@ export class RestAreaMatcher {
     }
 
     // 9단계: 신뢰도 기반 판별 (새로 추가된 필드)
-    if (restArea.confidence_score && restArea.confidence_score >= 0.7) {
+    if ((restArea as any).confidence_score && (restArea as any).confidence_score >= 0.7) {
       return true;
     }
 

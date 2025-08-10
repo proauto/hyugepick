@@ -55,8 +55,8 @@ export class RestAreaSyncService {
 
       console.log(`✅ API에서 ${restAreas.length}개 휴게소 데이터 수신`);
 
-      // 2. 데이터베이스에 저장
-      const result = await this.db.upsertRestAreas(restAreas);
+      // 2. 데이터베이스에 저장 (RestArea를 RestAreaDB로 변환)
+      const result = await this.db.upsertRestAreas(restAreas as any);
 
       // 3. 동기화 로그 업데이트
       if (logId) {
@@ -167,7 +167,7 @@ export class RestAreaSyncService {
 
       // 변경된 데이터만 필터링 (실제로는 API가 변경 시간을 제공해야 함)
       // 현재는 모든 데이터를 업데이트하되, DB에서 자동으로 중복 처리
-      const result = await this.db.upsertRestAreas(latestRestAreas);
+      const result = await this.db.upsertRestAreas(latestRestAreas as any);
 
       // 동기화 로그 업데이트
       if (logId) {

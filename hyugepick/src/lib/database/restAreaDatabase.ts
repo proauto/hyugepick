@@ -1,11 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-import { RestArea, RestFood, RestFacility, Coordinates } from '@/types/map';
-
-// Supabase 클라이언트 초기화
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { Coordinates } from '@/types/map';
+import { supabase } from '@/lib/supabase';
 
 // 데이터베이스 타입 정의
 interface RestAreaDB {
@@ -54,7 +48,7 @@ interface SyncLog {
 
 export class RestAreaDatabase {
   // 휴게소 데이터 저장 또는 업데이트 (upsert)
-  async upsertRestAreas(restAreas: RestArea[]): Promise<{ inserted: number; updated: number; failed: number }> {
+  async upsertRestAreas(restAreas: RestAreaDB[]): Promise<{ inserted: number; updated: number; failed: number }> {
     let inserted = 0;
     let updated = 0;
     let failed = 0;
@@ -110,35 +104,35 @@ export class RestAreaDatabase {
   }
 
   // RestArea를 DB 형식으로 변환
-  private convertToDBFormat(restArea: RestArea): Omit<RestAreaDB, 'id' | 'created_at' | 'updated_at'> {
+  private convertToDBFormat(restArea: RestAreaDB): Omit<RestAreaDB, 'id' | 'created_at' | 'updated_at'> {
     // 편의시설 파싱
     const facilitiesArray = Array.isArray(restArea.facilities) ? restArea.facilities : [];
     const facilitiesStr = facilitiesArray.join(',').toLowerCase();
 
     return {
-      unit_code: restArea.id, // RestArea의 id를 unit_code로 사용
+      unit_code: restArea.unit_code,
       name: restArea.name,
-      route_code: restArea.routeCode,
-      route_name: '',
+      route_code: restArea.route_code,
+      route_name: restArea.route_name || '',
       direction: restArea.direction,
-      lat: restArea.coordinates.lat,
-      lng: restArea.coordinates.lng,
+      lat: restArea.lat,
+      lng: restArea.lng,
       address: restArea.address,
-      phone: restArea.phoneNumber,
-      service_type: '휴게소',
-      operating_hours: restArea.operatingHours || '24시간',
-      has_parking: facilitiesStr.includes('주차'),
-      has_toilet: facilitiesStr.includes('화장실'),
-      has_gas_station: facilitiesStr.includes('주유소'),
-      has_lpg_station: facilitiesStr.includes('lpg'),
-      has_electric_charger: facilitiesStr.includes('충전') || facilitiesStr.includes('전기'),
-      has_convenience_store: facilitiesStr.includes('편의점'),
-      has_atm: facilitiesStr.includes('atm') || facilitiesStr.includes('현금'),
-      has_restaurant: facilitiesStr.includes('식당') || facilitiesStr.includes('음식'),
-      has_pharmacy: facilitiesStr.includes('약국'),
+      phone: restArea.phone,
+      service_type: restArea.service_type || '휴게소',
+      operating_hours: restArea.operating_hours || '24시간',
+      has_parking: restArea.has_parking || facilitiesStr.includes('주차'),
+      has_toilet: restArea.has_toilet || facilitiesStr.includes('화장실'),
+      has_gas_station: restArea.has_gas_station || facilitiesStr.includes('주유소'),
+      has_lpg_station: restArea.has_lpg_station || facilitiesStr.includes('lpg'),
+      has_electric_charger: restArea.has_electric_charger || facilitiesStr.includes('충전') || facilitiesStr.includes('전기'),
+      has_convenience_store: restArea.has_convenience_store || facilitiesStr.includes('편의점'),
+      has_atm: restArea.has_atm || facilitiesStr.includes('atm') || facilitiesStr.includes('현금'),
+      has_restaurant: restArea.has_restaurant || facilitiesStr.includes('식당') || facilitiesStr.includes('음식'),
+      has_pharmacy: restArea.has_pharmacy || facilitiesStr.includes('약국'),
       facilities: facilitiesArray,
-      source: 'highway_api',
-      is_verified: true
+      source: restArea.source || 'highway_api',
+      is_verified: restArea.is_verified !== undefined ? restArea.is_verified : true
     };
   }
 
@@ -147,7 +141,7 @@ export class RestAreaDatabase {
     routeCode?: string;
     direction?: string;
     limit?: number;
-  }): Promise<RestArea[]> {
+  }): Promise<RestAreaDB[]> {
     try {
       let query = supabase
         .from('rest_areas')
@@ -170,54 +164,23 @@ export class RestAreaDatabase {
       if (!data) return [];
 
       // DB 형식을 RestArea 형식으로 변환
-      return data.map(dbItem => this.convertFromDBFormat(dbItem));
+      return data as RestAreaDB[];
     } catch (error) {
       console.error('DB 조회 오류:', error);
       return [];
     }
   }
 
-  // DB 형식을 RestArea 형식으로 변환
-  private convertFromDBFormat(dbItem: RestAreaDB): RestArea {
-    const facilities: string[] = [];
-    
-    if (dbItem.has_parking) facilities.push('주차장');
-    if (dbItem.has_toilet) facilities.push('화장실');
-    if (dbItem.has_gas_station) facilities.push('주유소');
-    if (dbItem.has_lpg_station) facilities.push('LPG충전소');
-    if (dbItem.has_electric_charger) facilities.push('전기충전소');
-    if (dbItem.has_convenience_store) facilities.push('편의점');
-    if (dbItem.has_atm) facilities.push('ATM');
-    if (dbItem.has_restaurant) facilities.push('식당');
-    if (dbItem.has_pharmacy) facilities.push('약국');
-    
-    // 추가 facilities JSON 배열 병합
-    if (dbItem.facilities && Array.isArray(dbItem.facilities)) {
-      facilities.push(...dbItem.facilities.filter((f: string) => !facilities.includes(f)));
-    }
-
-    return {
-      id: dbItem.unit_code,
-      name: dbItem.name,
-      coordinates: {
-        lat: dbItem.lat,
-        lng: dbItem.lng
-      },
-      routeCode: dbItem.route_code || '',
-      direction: dbItem.direction || '',
-      facilities,
-      operatingHours: dbItem.operating_hours || '24시간',
-      phoneNumber: dbItem.phone || '',
-      address: dbItem.address || '',
-      foods: [] // 필요시 별도 조회
-    };
+  // DB 형식을 그대로 반환 (RestAreaDB를 직접 사용)
+  private convertFromDBFormat(dbItem: RestAreaDB): RestAreaDB {
+    return dbItem;
   }
 
   // 경로 근처 휴게소 조회 (PostGIS 함수 사용)
   async findRestAreasNearRoute(
     routePath: Coordinates[], 
     bufferMeters: number = 500
-  ): Promise<RestArea[]> {
+  ): Promise<RestAreaDB[]> {
     try {
       // 경로를 WKT LineString 형식으로 변환
       const lineStringWKT = this.convertToLineStringWKT(routePath);
@@ -247,7 +210,7 @@ export class RestAreaDatabase {
       // 거리 정보 병합하여 반환
       return fullData.map((dbItem: RestAreaDB) => {
         const distanceInfo = data.find((d: any) => d.unit_code === dbItem.unit_code);
-        const restArea = this.convertFromDBFormat(dbItem);
+        const restArea = dbItem;
         
         if (distanceInfo) {
           (restArea as any).distanceFromRoute = distanceInfo.distance_meters / 1000; // km로 변환
@@ -274,7 +237,7 @@ export class RestAreaDatabase {
     lng: number, 
     limit: number = 10,
     maxDistanceMeters: number = 50000
-  ): Promise<RestArea[]> {
+  ): Promise<RestAreaDB[]> {
     try {
       const { data, error } = await supabase
         .rpc('find_nearest_rest_areas', {
@@ -301,7 +264,7 @@ export class RestAreaDatabase {
       // 거리 정보 병합하여 반환
       return fullData.map((dbItem: RestAreaDB) => {
         const distanceInfo = data.find((d: any) => d.unit_code === dbItem.unit_code);
-        const restArea = this.convertFromDBFormat(dbItem);
+        const restArea = dbItem;
         
         if (distanceInfo) {
           (restArea as any).distanceFromStart = distanceInfo.distance_meters / 1000; // km로 변환

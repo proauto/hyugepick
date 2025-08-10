@@ -35,7 +35,7 @@ console.log(`🕐 시작 시간: ${new Date().toLocaleString('ko-KR')}`);
 // 한국도로공사 API 호출 함수
 async function fetchRestAreasFromAPI(): Promise<any[]> {
   const baseUrl = 'https://data.ex.co.kr/openapi';
-  let allRestAreas: any[] = [];
+  const allRestAreas: any[] = [];
   let pageNo = 1;
   const numOfRows = 100;
 

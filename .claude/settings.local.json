@@ -48,7 +48,18 @@
       "Bash(wmic:*)",
       "Bash(copy:*)",
       "Bash(cp:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(vercel:*)",
+      "Bash(git submodule:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(true)",
+      "Bash(npm run lint)",
+      "Bash(npx eslint:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

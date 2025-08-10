@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Coordinates, RestArea } from '@/types/map';
-import { RouteInfo, KakaoMap, KakaoMarker, KakaoPolyline } from '@/types/map';
 import { unifiedRestAreaFilter } from '@/lib/unifiedRestAreaFilter';
 import { calculateDistance } from '@/lib/utils';
 
 interface RouteMapProps {
   departure: Coordinates;
   destination: Coordinates;
-  onRouteCalculated?: (route: RouteInfo) => void;
+  onRouteCalculated?: (route: any) => void;
   onError?: (error: string) => void;
   className?: string;
 }
@@ -22,9 +21,9 @@ export default function RouteMap({
   className = ''
 }: RouteMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<KakaoMap | null>(null);
-  const markersRef = useRef<KakaoMarker[]>([]);
-  const polylinesRef = useRef<KakaoMarker[]>([]);
+  const mapInstanceRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
+  const polylinesRef = useRef<any[]>([]);
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState('지도 초기화 중...');
@@ -400,8 +399,7 @@ export default function RouteMap({
             distance: routeDistance,
             duration: routeDuration,
             path: routePath,
-            restAreas: restAreas,
-            fare: 0 // 기본값 설정
+            restAreas: restAreas
           });
         }
 
@@ -417,8 +415,7 @@ export default function RouteMap({
             distance: routeDistance,
             duration: routeDuration,
             path: routePath,
-            restAreas: [],
-            fare: 0 // 기본값 설정
+            restAreas: []
           });
         }
         
@@ -439,8 +436,7 @@ export default function RouteMap({
           distance: distance * 1000,
           duration: estimatedTime * 60,
           path: [departure, destination],
-          restAreas: [],
-          fare: 0 // 기본값 설정
+          restAreas: []
         });
       }
       

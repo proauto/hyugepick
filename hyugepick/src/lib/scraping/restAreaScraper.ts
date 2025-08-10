@@ -1,5 +1,4 @@
 import { RestArea } from '@/types/map';
-import { createClient } from '@supabase/supabase-js';
 
 // 스크래핑 클래스 내부에서만 Supabase 클라이언트 사용
 

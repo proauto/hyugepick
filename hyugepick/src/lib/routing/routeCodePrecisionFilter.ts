@@ -45,7 +45,7 @@ export class RouteCodePrecisionFilter {
       return { lat: restArea.coordinates.lat, lng: restArea.coordinates.lng };
     }
     if (restArea.lat && restArea.lng) {
-      return { lat: restArea.lat, lng: restArea.lng };
+      return { lat: restArea.lat as number, lng: restArea.lng as number };
     }
     return { lat: 0, lng: 0 }; // 기본값
   }

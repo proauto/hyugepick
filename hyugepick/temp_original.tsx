@@ -6,7 +6,6 @@ import LocationInput from '@/components/location/LocationInput';
 import RouteMap from '@/components/map/RouteMap';
 import KakaoDebugger from '@/components/KakaoDebugger';
 import { useKakaoMap } from '@/hooks/useKakaoMap';
-import { RouteInfo } from '@/types/map';
 
 interface LocationData {
   address: string;
@@ -19,7 +18,7 @@ export default function RoutePage() {
   const [errors, setErrors] = useState<{ departure?: string; destination?: string }>({});
   const [isSearching, setIsSearching] = useState(false);
   const [showMap, setShowMap] = useState(false);
-  const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
+  const [routeInfo, setRouteInfo] = useState<any>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
   
   const { geocode } = useKakaoMap();
@@ -133,7 +132,7 @@ export default function RoutePage() {
   };
 
   // 경로 계산 완료 핸들러 (메모이제이션)
-  const handleRouteCalculated = useCallback((route: RouteInfo) => {
+  const handleRouteCalculated = useCallback((route: any) => {
     setRouteInfo(route);
   }, []);
 

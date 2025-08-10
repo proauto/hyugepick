@@ -4,15 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation } from '@/hooks/useLocation';
 import { useKakaoMap } from '@/hooks/useKakaoMap';
 import LocationPermissionModal from './LocationPermissionModal';
-interface PlaceSearchResult {
-  place_name: string;
-  road_address_name?: string;
-  address_name?: string;
-  x: string;
-  y: string;
-  category_name?: string;
-  distance?: string;
-}
 
 interface LocationInputProps {
   label: string;
@@ -46,10 +37,11 @@ export default function LocationInput({
     permission,
     getCurrentLocation, 
     requestPermission,
-    
+    clearError,
     isPWA 
   } = useLocation();
 
+  const { geocode } = useKakaoMap();
 
   // GPS 위치 변경 감지
   useEffect(() => {
@@ -63,7 +55,7 @@ export default function LocationInput({
 
   // 장소 검색 상태
   const [isSearching, setIsSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState<PlaceSearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -121,7 +113,7 @@ export default function LocationInput({
         places.keywordSearch(keyword, (result: unknown[], status: string) => {
           if (status === window.kakao.maps.services.Status.OK) {
             console.log('🔥 검색 결과:', result);
-            setSearchResults((result as PlaceSearchResult[]).slice(0, 5)); // 상위 5개만
+            setSearchResults(result.slice(0, 5) as unknown[]); // 상위 5개만
             setShowResults(true);
           } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
             setSearchResults([]);
@@ -143,15 +135,23 @@ export default function LocationInput({
   };
 
   // 검색 결과 선택 처리
-  const handlePlaceSelect = (place: PlaceSearchResult) => {
+  const handlePlaceSelect = (place: unknown) => {
     console.log('🔥 장소 선택:', place);
     
+    const placeData = place as {
+      place_name: string;
+      road_address_name?: string;
+      address_name?: string;
+      x: string;
+      y: string;
+    };
     
     // 장소명을 우선으로 하되, 주소도 포함
-    const selectedAddress = place.place_name;
+    const selectedAddress = placeData.place_name;
+    const fullAddress = placeData.road_address_name || placeData.address_name;
     const coordinates = {
-      lat: parseFloat(place.y),
-      lng: parseFloat(place.x)
+      lat: parseFloat(placeData.y),
+      lng: parseFloat(placeData.x)
     };
 
     console.log('🔥 선택된 주소:', selectedAddress);

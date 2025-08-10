@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { routeRestAreaService } from '@/lib/routeRestAreaService';
 import { Coordinates } from '@/types/map';
+import { isValidCoordinate } from '@/lib/utils';
 
 // 최적화된 휴게소 추천 API 엔드포인트
 export async function POST(request: NextRequest) {
@@ -199,11 +200,3 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// 좌표 유효성 검사 함수
-function isValidCoordinate(coord: any): coord is Coordinates {
-  return coord && 
-         typeof coord.lat === 'number' && 
-         typeof coord.lng === 'number' &&
-         coord.lat >= -90 && coord.lat <= 90 &&
-         coord.lng >= -180 && coord.lng <= 180;
-}

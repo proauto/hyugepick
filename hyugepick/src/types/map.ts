@@ -4,29 +4,29 @@ declare global {
     kakao: {
       maps: {
         load: (callback: () => void) => void;
-        Map: new (container: HTMLElement, options: any) => any;
-        LatLng: new (lat: number, lng: number) => any;
-        LatLngBounds: new () => any;
-        Marker: new (options: any) => any;
-        InfoWindow: new (options: any) => any;
-        Polyline: new (options: any) => any;
-        MarkerImage: new (src: string, size: any, options?: any) => any;
-        Size: new (width: number, height: number) => any;
-        Point: new (x: number, y: number) => any;
-        MapTypeControl: new () => any;
-        ZoomControl: new () => any;
+        Map: new (container: HTMLElement, options: KakaoMapOptions) => KakaoMap;
+        LatLng: new (lat: number, lng: number) => KakaoLatLng;
+        LatLngBounds: new () => KakaoLatLngBounds;
+        Marker: new (options: KakaoMarkerOptions) => KakaoMarker;
+        InfoWindow: new (options: KakaoInfoWindowOptions) => KakaoInfoWindow;
+        Polyline: new (options: KakaoPolylineOptions) => KakaoPolyline;
+        MarkerImage: new (src: string, size: KakaoSize, options?: KakaoMarkerImageOptions) => KakaoMarkerImage;
+        Size: new (width: number, height: number) => KakaoSize;
+        Point: new (x: number, y: number) => KakaoPoint;
+        MapTypeControl: new () => KakaoControl;
+        ZoomControl: new () => KakaoControl;
         ControlPosition: {
-          TOPRIGHT: any;
-          RIGHT: any;
-          TOPLEFT: any;
-          LEFT: any;
-          BOTTOMLEFT: any;
-          BOTTOM: any;
-          BOTTOMRIGHT: any;
+          TOPRIGHT: string;
+          RIGHT: string;
+          TOPLEFT: string;
+          LEFT: string;
+          BOTTOMLEFT: string;
+          BOTTOM: string;
+          BOTTOMRIGHT: string;
         };
         services: {
-          Geocoder: new () => any;
-          Places: new () => any;
+          Geocoder: new () => KakaoGeocoder;
+          Places: new () => KakaoPlaces;
           Status: {
             OK: string;
             ZERO_RESULT: string;
@@ -34,8 +34,8 @@ declare global {
           };
         };
         event: {
-          addListener: (target: any, type: string, handler: (...args: any[]) => void) => void;
-          removeListener: (target: any, type: string, handler: (...args: any[]) => void) => void;
+          addListener: (target: KakaoEventTarget, type: string, handler: (...args: unknown[]) => void) => void;
+          removeListener: (target: KakaoEventTarget, type: string, handler: (...args: unknown[]) => void) => void;
         };
       };
     };
@@ -73,7 +73,7 @@ export interface RestArea {
   route_direction?: string; // 경로 방향
   distanceFromStart?: number; // 시작점으로부터 거리
   estimatedTime?: number;  // 예상 시간
-  [key: string]: any;      // 기타 동적 속성들
+  [key: string]: unknown;  // 기타 동적 속성들
 }
 
 export interface RestFood {
@@ -115,7 +115,7 @@ export interface MapProps {
   center?: Coordinates;
   level?: number;
   className?: string;
-  onMapLoad?: (map: any) => void;
+  onMapLoad?: (map: KakaoMap) => void;
   children?: React.ReactNode;
 }
 
@@ -125,3 +125,97 @@ export interface RouteDisplayProps {
   onRouteCalculated?: (route: RouteInfo) => void;
   onError?: (error: string) => void;
 }
+
+// Kakao Maps 타입 정의
+export interface KakaoMapOptions {
+  center: KakaoLatLng;
+  level: number;
+  draggable?: boolean;
+  scrollwheel?: boolean;
+  disableDoubleClick?: boolean;
+  disableDoubleClickZoom?: boolean;
+  keyboardShortcuts?: boolean;
+  projectionId?: string | null;
+}
+
+export interface KakaoLatLng {
+  getLat(): number;
+  getLng(): number;
+}
+
+export interface KakaoLatLngBounds {
+  extend(latlng: KakaoLatLng): void;
+}
+
+export interface KakaoSize {
+  width: number;
+  height: number;
+}
+
+export interface KakaoPoint {
+  x: number;
+  y: number;
+}
+
+export interface KakaoMarkerImageOptions {
+  offset: KakaoPoint;
+}
+
+export interface KakaoMarkerImage {
+  // MarkerImage properties and methods
+  [key: string]: unknown;
+}
+
+export interface KakaoMarkerOptions {
+  position: KakaoLatLng;
+  image?: KakaoMarkerImage | null;
+}
+
+export interface KakaoMarker {
+  setMap(map: KakaoMap | null): void;
+}
+
+export interface KakaoInfoWindowOptions {
+  content?: string;
+  zIndex?: number;
+}
+
+export interface KakaoInfoWindow {
+  open(map: KakaoMap, marker: KakaoMarker): void;
+  close(): void;
+}
+
+export interface KakaoPolylineOptions {
+  path: KakaoLatLng[];
+  strokeWeight: number;
+  strokeColor: string;
+  strokeOpacity: number;
+  strokeStyle?: string;
+}
+
+export interface KakaoPolyline {
+  setMap(map: KakaoMap | null): void;
+}
+
+export interface KakaoMap {
+  addControl(control: KakaoControl, position: string): void;
+  setBounds(bounds: KakaoLatLngBounds): void;
+  setDraggable(draggable: boolean): void;
+  setZoomable(zoomable: boolean): void;
+}
+
+export interface KakaoControl {
+  // Control properties and methods
+  [key: string]: unknown;
+}
+
+export interface KakaoGeocoder {
+  addressSearch(address: string, callback: (result: unknown[], status: string) => void): void;
+  coord2Address(lng: number, lat: number, callback: (result: unknown[], status: string) => void): void;
+}
+
+export interface KakaoPlaces {
+  keywordSearch(keyword: string, callback: (result: unknown[], status: string) => void): void;
+}
+
+export type KakaoEventTarget = KakaoMap | KakaoMarker | KakaoInfoWindow | KakaoPolyline;

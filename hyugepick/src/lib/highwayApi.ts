@@ -507,7 +507,7 @@ export class HighwayAPI {
   // 좌표가 경로 근처에 있는지 확인 (샘플링 개선)
   private isNearRoute(point: Coordinates, routePath: Coordinates[], bufferKm: number): boolean {
     let minDistance = Infinity;
-    let closestPoint = null;
+    // let closestPoint = null;
     
     // 경로가 너무 길면 샘플링해서 성능 향상 (매 10개 점마다 확인)
     const sampleStep = Math.max(1, Math.floor(routePath.length / 1000)); // 최대 1000개 점만 확인
@@ -519,7 +519,7 @@ export class HighwayAPI {
       const distance = this.calculateDistance(point, routePoint);
       if (distance < minDistance) {
         minDistance = distance;
-        closestPoint = routePoint;
+        // closestPoint = routePoint; // 미사용 변수 제거
       }
       return distance <= bufferKm;
     });

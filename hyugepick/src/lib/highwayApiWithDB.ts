@@ -50,7 +50,7 @@ export class HighwayAPIWithDB {
       
       if (restAreas && restAreas.length > 0) {
         console.log(`✅ DB에서 ${restAreas.length}개 휴게소 조회 성공`);
-        return restAreas;
+        return restAreas as any;
       }
       
       console.log('⚠️ DB에 데이터가 없습니다. API 직접 호출...');
@@ -87,7 +87,7 @@ export class HighwayAPIWithDB {
       
       if (restAreas && restAreas.length > 0) {
         console.log(`✅ DB에서 ${restAreas.length}개 경로 근처 휴게소 조회 성공`);
-        return restAreas;
+        return restAreas as any;
       }
       
       console.log('⚠️ DB 조회 결과가 없습니다.');
@@ -144,7 +144,7 @@ export class HighwayAPIWithDB {
       
       if (restAreas && restAreas.length > 0) {
         console.log(`✅ DB에서 ${restAreas.length}개 가까운 휴게소 조회 성공`);
-        return restAreas;
+        return restAreas as any;
       }
       
     } catch (error) {
@@ -167,7 +167,7 @@ export class HighwayAPIWithDB {
   private async saveToDBInBackground(restAreas: RestArea[]): Promise<void> {
     try {
       console.log('💾 백그라운드에서 DB 저장 시작...');
-      const result = await this.db.upsertRestAreas(restAreas);
+      const result = await this.db.upsertRestAreas(restAreas as any);
       console.log(`💾 DB 저장 완료: 신규 ${result.inserted}개, 업데이트 ${result.updated}개`);
     } catch (error) {
       console.error('💾 백그라운드 DB 저장 실패:', error);

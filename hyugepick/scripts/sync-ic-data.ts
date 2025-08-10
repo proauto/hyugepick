@@ -108,7 +108,7 @@ async function fetchICData(): Promise<ICData[]> {
     return getMockICData();
   }
   
-  let allData: ICData[] = [];
+  const allData: ICData[] = [];
   let pageNo = 1;
   const numOfRows = 100;
   let hasMoreData = true;

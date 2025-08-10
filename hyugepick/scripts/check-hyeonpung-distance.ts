@@ -205,7 +205,7 @@ function distanceFromPointToLineSegment(
     return calculateDistance(point, lineStart);
   }
 
-  let param = dot / lenSq;
+  const param = dot / lenSq;
 
   let xx, yy;
 
