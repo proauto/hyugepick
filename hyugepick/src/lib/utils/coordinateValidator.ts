@@ -68,11 +68,22 @@ export function extractCoordinates(data: any): Coordinates | null {
     return { lat: data.y, lng: data.x };
   }
 
+  // xValue, yValue 형태인 경우 (한국도로공사 API에서 사용)
+  if (data?.xValue && data?.yValue) {
+    const lng = parseFloat(data.xValue);
+    const lat = parseFloat(data.yValue);
+    if (isValidLatLng(lat, lng)) {
+      return { lat, lng };
+    }
+  }
+
   console.warn('extractCoordinates: 유효한 좌표를 찾을 수 없습니다', {
     data,
     hasLat: 'lat' in (data || {}),
     hasLng: 'lng' in (data || {}),
     hasCoordinates: 'coordinates' in (data || {}),
+    hasXValue: 'xValue' in (data || {}),
+    hasYValue: 'yValue' in (data || {}),
     coordinatesType: typeof data?.coordinates
   });
   

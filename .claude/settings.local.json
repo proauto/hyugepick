@@ -61,7 +61,8 @@
       "Bash(npx eslint:*)",
       "Bash(sed:*)",
       "Bash(git checkout:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(git branch:*)"
     ],
     "deny": []
   }
